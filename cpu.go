@@ -38,3 +38,10 @@ func newCpu() cpu {
 
 	return c
 }
+
+func (c *cpu) Step() {
+	c.opcode = c.memory[c.pc]<<8 | c.memory[c.pc+1]
+
+	switch c.opcode {
+	}
+}
