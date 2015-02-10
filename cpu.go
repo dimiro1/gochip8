@@ -22,3 +22,19 @@ type cpu struct {
 	memory [4096]byte    // Memory - 4K
 	keys   [16]byte      // Key State
 }
+
+func newCpu() cpu {
+	c := cpu{
+		pc:     0x200,
+		opcode: 0,
+		i:      0,
+		sp:     0,
+	}
+
+	// Load font
+	for i := 0; i < 80; i++ {
+		c.memory[i] = 0 // fontset
+	}
+
+	return c
+}
