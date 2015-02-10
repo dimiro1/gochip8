@@ -1,2 +1,3 @@
 # gochip8
-A chip8 emulator in GO
+
+A chip8 emulator in GO.
