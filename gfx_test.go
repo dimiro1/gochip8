@@ -4,12 +4,19 @@
 
 package gochip8
 
-// gfx is the chip8 screen buffer
-type gfx [64 * 32]byte
+import (
+	"testing"
 
-// Cls Clear the screen
-func (g *gfx) Cls() {
-	for i, _ := range g {
-		g[i] = 0
+	"github.com/bmizerany/assert"
+)
+
+func TestCls(t *testing.T) {
+	g := new(gfx)
+	g[0] = 1
+
+	g.Cls()
+
+	for _, e := range g {
+		assert.Equal(t, byte(0), e)
 	}
 }
