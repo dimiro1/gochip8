@@ -4,12 +4,17 @@
 
 package gochip8
 
+const (
+	COLOR_BLACK = iota
+	COLOR_WHITE
+)
+
 // gfx is the chip8 screen buffer
 type gfx [64 * 32]byte
 
 // Cls Clear the screen
 func (g *gfx) Cls() {
 	for i, _ := range g {
-		g[i] = 0
+		g[i] = COLOR_BLACK
 	}
 }

@@ -12,11 +12,11 @@ import (
 
 func TestCls(t *testing.T) {
 	g := new(gfx)
-	g[0] = 1
+	g[0] = COLOR_WHITE
 
 	g.Cls()
 
 	for _, e := range g {
-		assert.Equal(t, byte(0), e)
+		assert.Equal(t, byte(COLOR_BLACK), e)
 	}
 }
