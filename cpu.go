@@ -20,18 +20,18 @@ func (p *pc) Increment() {
 
 // The stack
 type stack struct {
-	data [16]uint16
+	data [16]pc
 	sp   uint16 // Stack Pointer
 }
 
 // Push the addr to the stack
-func (s *stack) Push(data uint16) {
+func (s *stack) Push(data pc) {
 	s.data[s.sp] = data
 	s.sp++
 }
 
 // Pop a value from stack
-func (s *stack) Pop() uint16 {
+func (s *stack) Pop() pc {
 	s.sp--
 	return s.data[s.sp]
 }
@@ -104,12 +104,12 @@ func (c *cpu) Step() {
 		case 0x00E0: // 00E0 - CLS
 			c.gfx.Cls()
 		case 0x00EE: // 00EE - RET
-			c.pc = pc(c.stack.Pop())
+			c.pc = c.stack.Pop()
 		}
 	case 0x1000: // 1nnn - JP addr
 		c.pc = pc(opcode & 0x0FFF)
 	case 0x2000: // 2nnn - CALL addr
-		c.stack.Push(uint16(c.pc))
+		c.stack.Push(c.pc)
 		c.pc = pc(opcode & 0x0FFF)
 	case 0x3000: // 3xkk - SE Vx, byte
 		kk := opcode & 0x00FF
