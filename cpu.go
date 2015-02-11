@@ -5,6 +5,7 @@
 package gochip8
 
 import (
+	"fmt"
 	"math/rand"
 	"time"
 )
@@ -226,5 +227,7 @@ func (c *cpu) Step() {
 				c.regs[i] = c.memory.Read(c.i + i)
 			}
 		}
+	default:
+		panic(fmt.Sprintf("Unknown opcode %s", opcode))
 	}
 }
