@@ -207,7 +207,8 @@ func (c *cpu) Step() {
 		case 0x0007: // Fx07 - LD Vx, DT
 			c.regs[x] = c.dt
 		case 0x000A: // Fx0A - LD Vx, K
-			// TODO
+			// TODO: Wait for a key press, store the value of the key in Vx.
+			// All execution stops until a key is pressed, then the value of that key is stored in Vx.
 		case 0x0015: // Fx15 - LD DT, Vx
 			c.dt = c.regs[x]
 		case 0x0018: // Fx18 - LD ST, Vx
@@ -217,7 +218,8 @@ func (c *cpu) Step() {
 		case 0x0029: // Fx29 - LD F, Vx
 			c.i = uint16(c.regs[x] * 5) // 5 is the number of rows per character.
 		case 0x0033: // Fx33 - LD B, Vx
-			// TODO
+			// TODO: Store BCD representation of Vx in memory locations I, I+1, and I+2.
+			// The interpreter takes the decimal value of Vx, and places the hundreds digit in memory at location in I, the tens digit at location I+1, and the ones digit at location I+2.
 		case 0x0055: // Fx55 - LD [I], Vx
 			for i := uint16(0); i <= x; i++ {
 				c.memory.Write(c.i+i, c.regs[i])
