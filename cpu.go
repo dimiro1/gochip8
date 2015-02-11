@@ -230,6 +230,6 @@ func (c *cpu) Step() {
 			}
 		}
 	default:
-		panic(fmt.Sprintf("Unknown opcode %s", opcode))
+		panic(fmt.Sprintf("Unknown opcode %+v", opcode))
 	}
 }
