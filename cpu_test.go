@@ -91,3 +91,25 @@ func Test3000NotEqual(t *testing.T) {
 
 	assert.Equal(t, oldPC, c.pc)
 }
+
+// 4xkk - SNE Vx, byte
+func Test4000Equal(t *testing.T) {
+	c := newCpuAt(0x41FF)
+	c.regs[1] = 0xFF
+
+	oldPC := c.pc + 2
+	c.Step()
+
+	assert.Equal(t, oldPC, c.pc)
+}
+
+// 4xkk - SNE Vx, byte
+func Test4000NotEqual(t *testing.T) {
+	c := newCpuAt(0x41FF)
+	c.regs[1] = 0xAA
+
+	oldPC := c.pc + 4
+	c.Step()
+
+	assert.Equal(t, oldPC, c.pc)
+}
