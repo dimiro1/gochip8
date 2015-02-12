@@ -95,8 +95,8 @@ func newCpu(s sound) cpu {
 // Step the cpu one instruction at a time
 func (c *cpu) Step() {
 	opcode := c.memory.ReadWord(uint16(c.pc))
-	x := opcode & 0x0F00
-	y := opcode & 0x00F0
+	x := (opcode & 0x0F00) >> 8
+	y := (opcode & 0x00F0) >> 4
 
 	c.pc.Increment()
 

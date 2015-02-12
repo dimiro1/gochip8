@@ -16,7 +16,7 @@ func TestRead(t *testing.T) {
 	mem[1] = 1
 
 	assert.Equal(t, mem[0], mem.Read(0))
-	assert.Equal(t, uint16(mem[0]<<8|mem[1]), mem.ReadWord(0))
+	assert.Equal(t, (uint16(mem[0])<<8 | uint16(mem[1])), mem.ReadWord(0))
 }
 
 func TestWrite(t *testing.T) {
@@ -25,5 +25,10 @@ func TestWrite(t *testing.T) {
 
 	assert.Equal(t, byte(1), mem[0])
 	mem.Write(0, 2)
+
 	assert.Equal(t, byte(2), mem[0])
+
+	mem.WriteWord(0, 0x00FF)
+	assert.Equal(t, byte(0), mem[0])
+	assert.Equal(t, byte(0xFF), mem[1])
 }

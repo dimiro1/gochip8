@@ -10,11 +10,28 @@ const (
 )
 
 // gfx is the chip8 screen buffer
-type gfx [64 * 32]byte
+type gfx [64][32]int
+
+// Return the given pixel
+func (g *gfx) GetPixel(x, y int) int {
+	return g[x][y]
+}
+
+// SetPixel set set the pixel of the given position
+func (g *gfx) SetPixel(x, y int) {
+	g[x][y] = COLOR_WHITE
+}
+
+// ClearPixel set set the pixel of the given position
+func (g *gfx) ClearPixel(x, y int) {
+	g[x][y] = COLOR_BLACK
+}
 
 // Cls Clear the screen
 func (g *gfx) Cls() {
-	for i, _ := range g {
-		g[i] = COLOR_BLACK
+	for i := 0; i < 64; i++ {
+		for j := 0; j < 32; j++ {
+			g.ClearPixel(i, j)
+		}
 	}
 }

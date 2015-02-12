@@ -10,13 +10,37 @@ import (
 	"github.com/bmizerany/assert"
 )
 
+func TestGetPixel(t *testing.T) {
+	g := new(gfx)
+	g.SetPixel(0, 0)
+
+	assert.Equal(t, COLOR_WHITE, g.GetPixel(0, 0))
+}
+
+func TestClearPixel(t *testing.T) {
+	g := new(gfx)
+	g.SetPixel(0, 0)
+	assert.Equal(t, COLOR_WHITE, g.GetPixel(0, 0))
+	g.ClearPixel(0, 0)
+	assert.Equal(t, COLOR_BLACK, g.GetPixel(0, 0))
+}
+
+func TestSetPixel(t *testing.T) {
+	g := new(gfx)
+	g.SetPixel(0, 0)
+
+	assert.Equal(t, COLOR_WHITE, g[0][0])
+}
+
 func TestCls(t *testing.T) {
 	g := new(gfx)
-	g[0] = COLOR_WHITE
+	g.SetPixel(0, 0)
 
 	g.Cls()
 
-	for _, e := range g {
-		assert.Equal(t, byte(COLOR_BLACK), e)
+	for i := 0; i < 64; i++ {
+		for j := 0; j < 32; j++ {
+			assert.Equal(t, COLOR_BLACK, g.GetPixel(i, j))
+		}
 	}
 }
