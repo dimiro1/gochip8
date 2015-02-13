@@ -171,3 +171,51 @@ func Test7000(t *testing.T) {
 	c.Step()
 	assert.Equal(t, c.regs[1], byte(2))
 }
+
+// 8xy0 - LD Vx, Vy
+func Test8xy0(t *testing.T) {
+	c := newCpuAt(0x8120)
+	c.regs[1] = 1
+	c.regs[2] = 0
+	assert.Equal(t, c.regs[1], byte(1))
+	assert.Equal(t, c.regs[2], byte(0))
+	c.Step()
+	assert.Equal(t, c.regs[1], byte(0))
+	assert.Equal(t, c.regs[2], byte(0))
+}
+
+// 8xy1 - OR Vx, Vy
+func Test8xy1(t *testing.T) {
+	c := newCpuAt(0x8121)
+	c.regs[1] = 1
+	c.regs[2] = 2
+	assert.Equal(t, c.regs[1], byte(1))
+	assert.Equal(t, c.regs[2], byte(2))
+	c.Step()
+	assert.Equal(t, c.regs[1], byte(1|2))
+	assert.Equal(t, c.regs[2], byte(2))
+}
+
+// 8xy2 - OR Vx, Vy
+func Test8xy2(t *testing.T) {
+	c := newCpuAt(0x8122)
+	c.regs[1] = 1
+	c.regs[2] = 2
+	assert.Equal(t, c.regs[1], byte(1))
+	assert.Equal(t, c.regs[2], byte(2))
+	c.Step()
+	assert.Equal(t, c.regs[1], byte(1&2))
+	assert.Equal(t, c.regs[2], byte(2))
+}
+
+// 8xy3 - OR Vx, Vy
+func Test8xy3(t *testing.T) {
+	c := newCpuAt(0x8123)
+	c.regs[1] = 1
+	c.regs[2] = 2
+	assert.Equal(t, c.regs[1], byte(1))
+	assert.Equal(t, c.regs[2], byte(2))
+	c.Step()
+	assert.Equal(t, c.regs[1], byte(1^2))
+	assert.Equal(t, c.regs[2], byte(2))
+}
