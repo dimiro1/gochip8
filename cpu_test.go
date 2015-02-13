@@ -11,20 +11,39 @@ import (
 )
 
 // dumbSound - Only for testing purpuses
-type dumbSound struct{}
+type dumbSound struct {
+	BeepCalled bool
+}
 
-func (s dumbSound) Beep() {
-	// play beep
+func (s *dumbSound) Beep() {
+	(*s).BeepCalled = true
 }
 
 // newCpuAt creates a new cpu and write the ins to the pc memory location
 // Only for testing purpuse
 func newCpuAt(ins uint16) cpu {
-	s := dumbSound{}
+	s := &dumbSound{}
 	c := newCpu(s)
 	c.memory.WriteWord(uint16(c.pc), ins)
 
 	return c
+}
+
+func TestTimers(t *testing.T) {
+	s := &dumbSound{}
+	c := newCpu(s)
+	c.memory.WriteWord(uint16(c.pc), 0x0E0)
+
+	c.dt = 1
+	c.st = 1
+
+	assert.Equal(t, s.BeepCalled, false)
+
+	c.Step()
+
+	assert.Equal(t, c.dt, byte(0))
+	assert.Equal(t, c.st, byte(0))
+	assert.Equal(t, s.BeepCalled, true)
 }
 
 // 00E0 - CLS
