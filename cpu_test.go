@@ -113,3 +113,42 @@ func Test4000NotEqual(t *testing.T) {
 
 	assert.Equal(t, oldPC, c.pc)
 }
+
+// 5xy0 - SE Vx, Vy
+func Test5000Equal(t *testing.T) {
+	c := newCpuAt(0x512F)
+	c.regs[1] = 0xFF
+	c.regs[2] = 0xFF
+
+	oldPC := c.pc + 4
+	c.Step()
+
+	assert.Equal(t, oldPC, c.pc)
+}
+
+// 5xy0 - SE Vx, Vy
+func Test5000NotEqual(t *testing.T) {
+	c := newCpuAt(0x512F)
+	c.regs[1] = 0xFF
+	c.regs[2] = 0xAA
+
+	oldPC := c.pc + 2
+	c.Step()
+
+	assert.Equal(t, oldPC, c.pc)
+}
+
+// 6xkk - LD Vx, byte
+func Test6000(t *testing.T) {
+	c := newCpuAt(0x61FF)
+	c.Step()
+	assert.Equal(t, c.regs[1], byte(0xFF))
+}
+
+// 7xkk - ADD Vx, byte
+func Test7000(t *testing.T) {
+	c := newCpuAt(0x7101)
+	c.regs[1] = 1
+	c.Step()
+	assert.Equal(t, c.regs[1], byte(2))
+}
