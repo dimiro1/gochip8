@@ -32,6 +32,8 @@ func newCpuAt(ins uint16) cpu {
 func TestTimers(t *testing.T) {
 	s := &dumbSound{}
 	c := newCpu(s)
+
+	// With Beep
 	c.memory.WriteWord(uint16(c.pc), 0x0E0)
 
 	c.dt = 1
@@ -44,6 +46,16 @@ func TestTimers(t *testing.T) {
 	assert.Equal(t, c.dt, byte(0))
 	assert.Equal(t, c.st, byte(0))
 	assert.Equal(t, s.BeepCalled, true)
+
+	// No Beep
+	c.memory.WriteWord(uint16(c.pc), 0x0E0)
+	s.BeepCalled = false
+
+	c.st = 2
+	c.Step()
+
+	assert.Equal(t, s.BeepCalled, false)
+	assert.Equal(t, c.st, byte(1))
 }
 
 // 00E0 - CLS
@@ -274,4 +286,15 @@ func Test8xy5NotGreater(t *testing.T) {
 
 	assert.Equal(t, c.regs[1], byte(0xFF))
 	assert.Equal(t, c.regs[0xF], byte(0))
+}
+
+// 8xy6 - SHR Vx {, Vy}
+func Test8xy6(t *testing.T) {
+	c := newCpuAt(0x8126)
+	c.regs[1] = 1
+
+	c.Step()
+
+	assert.Equal(t, c.regs[0xF], byte(1&0x0001))
+	assert.Equal(t, c.regs[1], byte(1/2))
 }
