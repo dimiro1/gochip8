@@ -219,3 +219,31 @@ func Test8xy3(t *testing.T) {
 	assert.Equal(t, c.regs[1], byte(1^2))
 	assert.Equal(t, c.regs[2], byte(2))
 }
+
+// 8xy4 - ADD Vx, Vy
+func Test8xy4Overflow(t *testing.T) {
+	c := newCpuAt(0x8124)
+	c.regs[1] = 0xFF
+	c.regs[2] = 1
+
+	assert.Equal(t, c.regs[0xF], byte(0))
+
+	c.Step()
+
+	assert.Equal(t, c.regs[1], byte(0))
+	assert.Equal(t, c.regs[0xF], byte(1))
+}
+
+// 8xy4 - ADD Vx, Vy
+func Test8xy4ONotverflow(t *testing.T) {
+	c := newCpuAt(0x8124)
+	c.regs[1] = 0xF0
+	c.regs[2] = 1
+
+	assert.Equal(t, c.regs[0xF], byte(0))
+
+	c.Step()
+
+	assert.Equal(t, c.regs[1], byte(0xF0+1))
+	assert.Equal(t, c.regs[0xF], byte(0))
+}

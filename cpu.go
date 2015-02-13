@@ -150,7 +150,7 @@ func (c *cpu) Step() {
 		case 0x0003: // 8xy3 - XOR Vx, Vy
 			c.regs[x] ^= c.regs[y]
 		case 0x0004: // 8xy4 - ADD Vx, Vy
-			r := c.regs[x] + c.regs[y]
+			r := uint16(c.regs[x]) + uint16(c.regs[y])
 
 			if r > 0xFF {
 				c.regs[0xF] = 1
@@ -158,7 +158,7 @@ func (c *cpu) Step() {
 				c.regs[0xF] = 0
 			}
 
-			c.regs[x] = r
+			c.regs[x] += c.regs[y]
 		case 0x0005: // 8xy5 - SUB Vx, Vy
 			if c.regs[x] > c.regs[y] {
 				c.regs[0xF] = 1
