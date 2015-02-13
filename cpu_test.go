@@ -247,3 +247,31 @@ func Test8xy4ONotverflow(t *testing.T) {
 	assert.Equal(t, c.regs[1], byte(0xF0+1))
 	assert.Equal(t, c.regs[0xF], byte(0))
 }
+
+// 8xy5 - SUB Vx, Vy
+func Test8xy5Greater(t *testing.T) {
+	c := newCpuAt(0x8125)
+	c.regs[1] = 2
+	c.regs[2] = 1
+
+	assert.Equal(t, c.regs[0xF], byte(0))
+
+	c.Step()
+
+	assert.Equal(t, c.regs[1], byte(1))
+	assert.Equal(t, c.regs[0xF], byte(1))
+}
+
+// 8xy5 - SUB Vx, Vy
+func Test8xy5NotGreater(t *testing.T) {
+	c := newCpuAt(0x8125)
+	c.regs[1] = 1
+	c.regs[2] = 2
+
+	assert.Equal(t, c.regs[0xF], byte(0))
+
+	c.Step()
+
+	assert.Equal(t, c.regs[1], byte(0xFF))
+	assert.Equal(t, c.regs[0xF], byte(0))
+}
