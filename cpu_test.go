@@ -326,3 +326,14 @@ func Test8xy7NotGreater(t *testing.T) {
 	assert.Equal(t, c.regs[1], byte(0xFF))
 	assert.Equal(t, c.regs[0xF], byte(0))
 }
+
+// 8xyE - SHL Vx {, Vy}
+func Test8xyE(t *testing.T) {
+	c := newCpuAt(0x812E)
+	c.regs[1] = 1
+
+	c.Step()
+
+	assert.Equal(t, c.regs[0xF], byte(1&0x0001))
+	assert.Equal(t, c.regs[1], byte(1*2))
+}
