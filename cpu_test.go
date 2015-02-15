@@ -337,3 +337,29 @@ func Test8xyE(t *testing.T) {
 	assert.Equal(t, c.regs[0xF], byte(1&0x0001))
 	assert.Equal(t, c.regs[1], byte(1*2))
 }
+
+// 9xy0 - SNE Vx, Vy
+func Test9xy0NotEqual(t *testing.T) {
+	c := newCpuAt(0x9120)
+	c.regs[1] = 1
+	c.regs[2] = 2
+
+	oldPC := c.pc
+
+	c.Step()
+
+	assert.Equal(t, c.pc, oldPC+4)
+}
+
+// 9xy0 - SNE Vx, Vy
+func Test9xy0Equal(t *testing.T) {
+	c := newCpuAt(0x9120)
+	c.regs[1] = 1
+	c.regs[2] = 1
+
+	oldPC := c.pc
+
+	c.Step()
+
+	assert.Equal(t, c.pc, oldPC+2)
+}
