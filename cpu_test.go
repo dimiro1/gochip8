@@ -396,3 +396,53 @@ func TestC000(t *testing.T) {
 
 	assert.Equal(t, c.regs[1], byte(expectedRandom&0xFF))
 }
+
+// TODO: Dxyn - DRW Vx, Vy, nibble
+
+// Ex9E - SKP Vx
+func TestEx9E_True(t *testing.T) {
+	c := newCpuAt(0xE19E)
+	c.keys[1] = true
+
+	oldPC := c.pc + 4
+
+	c.Step()
+
+	assert.Equal(t, pc(oldPC), c.pc)
+}
+
+// Ex9E - SKP Vx
+func TestEx9E_False(t *testing.T) {
+	c := newCpuAt(0xE19E)
+	c.keys[1] = false
+
+	oldPC := c.pc + 2
+
+	c.Step()
+
+	assert.Equal(t, pc(oldPC), c.pc)
+}
+
+// ExA1 - SKNP Vx
+func TestExA1_True(t *testing.T) {
+	c := newCpuAt(0xE1A1)
+	c.keys[1] = true
+
+	oldPC := c.pc + 2
+
+	c.Step()
+
+	assert.Equal(t, pc(oldPC), c.pc)
+}
+
+// ExA1 - SKNP Vx
+func TestExA1_False(t *testing.T) {
+	c := newCpuAt(0xE1A1)
+	c.keys[1] = false
+
+	oldPC := c.pc + 4
+
+	c.Step()
+
+	assert.Equal(t, pc(oldPC), c.pc)
+}
