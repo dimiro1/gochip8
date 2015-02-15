@@ -7,6 +7,8 @@ package gochip8
 import (
 	"testing"
 
+	"math/rand"
+
 	"github.com/bmizerany/assert"
 )
 
@@ -381,4 +383,16 @@ func TestB000(t *testing.T) {
 	c.Step()
 
 	assert.Equal(t, c.pc, pc(0xFFF+1))
+}
+
+// Cxkk - RND Vx, byte
+func TestC000(t *testing.T) {
+	c := newCpuAt(0xC1FF)
+
+	rand.Seed(1)         // Seed with a Known value
+	expectedRandom := 33 // With the expected seed, 33 is the first random.
+
+	c.Step()
+
+	assert.Equal(t, c.regs[1], byte(expectedRandom&0xFF))
 }
