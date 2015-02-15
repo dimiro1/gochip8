@@ -372,3 +372,13 @@ func TestA000(t *testing.T) {
 
 	assert.Equal(t, c.i, uint16(0xFFF))
 }
+
+// Bnnn - JP V0, addr
+func TestB000(t *testing.T) {
+	c := newCpuAt(0xBFFF)
+	c.regs[0] = 1
+
+	c.Step()
+
+	assert.Equal(t, c.pc, pc(0xFFF+1))
+}
