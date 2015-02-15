@@ -363,3 +363,12 @@ func Test9xy0Equal(t *testing.T) {
 
 	assert.Equal(t, c.pc, oldPC+2)
 }
+
+// Annn - LD I, addr
+func TestA000(t *testing.T) {
+	c := newCpuAt(0xAFFF)
+
+	c.Step()
+
+	assert.Equal(t, c.i, uint16(0xFFF))
+}
