@@ -446,3 +446,14 @@ func TestExA1_False(t *testing.T) {
 
 	assert.Equal(t, pc(oldPC), c.pc)
 }
+
+// Fx07 - LD Vx, DT
+func TestFx0A(t *testing.T) {
+	c := newCpuAt(0xF107)
+	c.regs[1] = 1
+	c.dt = 2
+
+	c.Step()
+
+	assert.Equal(t, c.regs[1], byte(2))
+}
