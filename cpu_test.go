@@ -457,3 +457,27 @@ func TestFx0A(t *testing.T) {
 
 	assert.Equal(t, c.regs[1], byte(2))
 }
+
+// TODO: Fx0A - LD Vx, K
+
+// Fx15 - LD DT, Vx
+func TestFx15(t *testing.T) {
+	c := newCpuAt(0xF115)
+	c.regs[1] = 10
+	c.dt = 2
+
+	c.Step()
+
+	assert.Equal(t, c.dt, byte(9)) // because, dt is subtracted in the end of the step
+}
+
+// // Fx18 - LD ST, Vx
+func TestFx18(t *testing.T) {
+	c := newCpuAt(0xF118)
+	c.regs[1] = 10
+	c.st = 2
+
+	c.Step()
+
+	assert.Equal(t, c.st, byte(9)) // because, st is subtracted in the end of the step
+}
