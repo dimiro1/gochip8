@@ -97,3 +97,6 @@ tramp
 
 # cask packages
 .cask/
+
+# Project specific
+coverage.out
