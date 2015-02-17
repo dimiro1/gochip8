@@ -241,8 +241,6 @@ func (c *cpu) Step() {
 				c.regs[i] = c.memory.Read(c.i + i)
 			}
 		}
-	default:
-		panic(fmt.Sprintf("Unknown opcode %X", opcode))
 	}
 
 	// Timers
