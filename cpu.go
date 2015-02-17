@@ -108,7 +108,7 @@ func (c *cpu) Step() {
 		case 0x00EE: // 00EE - RET
 			c.pc = c.stack.Pop()
 		default:
-			panic(fmt.Sprintf("Unknown opcode %X", opcode))
+			panic(fmt.Sprintf("Unknown opcode 0x%X", opcode))
 		}
 	case 0x1000: // 1nnn - JP addr
 		c.pc = pc(opcode & 0x0FFF)
@@ -181,7 +181,7 @@ func (c *cpu) Step() {
 			c.regs[0xF] = c.regs[x] & 0x0001
 			c.regs[x] = c.regs[x] * 2
 		default:
-			panic(fmt.Sprintf("Unknown opcode %X", opcode))
+			panic(fmt.Sprintf("Unknown opcode 0x%X", opcode))
 		}
 	case 0x9000: // 9xy0 - SNE Vx, Vy
 		if c.regs[x] != c.regs[y] {
@@ -208,7 +208,7 @@ func (c *cpu) Step() {
 				c.pc.Increment()
 			}
 		default:
-			panic(fmt.Sprintf("Unknown opcode %X", opcode))
+			panic(fmt.Sprintf("Unknown opcode 0x%X", opcode))
 		}
 	case 0xF000:
 		switch opcode & 0x00FF {

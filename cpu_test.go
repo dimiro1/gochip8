@@ -84,6 +84,14 @@ func Test00EE(t *testing.T) {
 	assert.Equal(t, pc(1), c.pc)
 }
 
+func TestPanic00(t *testing.T) {
+	c := newCpuAt(0x0000)
+
+	assert.Panic(t, "Unknown opcode 0x0", func() {
+		c.Step()
+	})
+}
+
 // 1nnn - JP addr
 func Test1000(t *testing.T) {
 	c := newCpuAt(0x1FFF)
@@ -353,6 +361,14 @@ func Test9xy0NotEqual(t *testing.T) {
 	assert.Equal(t, c.pc, oldPC+4)
 }
 
+func TestPanic8x(t *testing.T) {
+	c := newCpuAt(0x800F)
+
+	assert.Panic(t, "Unknown opcode 0x800F", func() {
+		c.Step()
+	})
+}
+
 // 9xy0 - SNE Vx, Vy
 func Test9xy0Equal(t *testing.T) {
 	c := newCpuAt(0x9120)
@@ -445,6 +461,14 @@ func TestExA1_False(t *testing.T) {
 	c.Step()
 
 	assert.Equal(t, pc(oldPC), c.pc)
+}
+
+func TestPanicEx(t *testing.T) {
+	c := newCpuAt(0xE002)
+
+	assert.Panic(t, "Unknown opcode 0xE002", func() {
+		c.Step()
+	})
 }
 
 // Fx07 - LD Vx, DT
