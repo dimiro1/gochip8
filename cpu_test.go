@@ -540,3 +540,18 @@ func TestFx33(t *testing.T) {
 	assert.Equal(t, c.memory.Read(c.i+1), byte(5)) // 50
 	assert.Equal(t, c.memory.Read(c.i), byte(2))   // 200
 }
+
+// Fx55 - LD [I], Vx
+func TestFx55(t *testing.T) {
+	c := newCpuAt(0xF255)
+	c.regs[0] = 0xAA
+	c.regs[1] = 0xBB
+
+	c.i = 0
+
+	c.Step()
+
+	assert.Equal(t, c.memory.Read(c.i), byte(0xAA))
+	assert.Equal(t, c.memory.Read(c.i+1), byte(0xBB))
+
+}
