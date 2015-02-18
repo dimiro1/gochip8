@@ -226,12 +226,9 @@ func (c *cpu) Step() {
 		case 0x0029: // Fx29 - LD F, Vx
 			c.i = uint16(c.regs[x] * 5) // 5 is the number of rows per character.
 		case 0x0033: // Fx33 - LD B, Vx
-			num := c.regs[x]
-
-			for i := uint16(3); i > 0; i-- {
-				c.memory.Write(c.i+i-1, num%10)
-				num /= 10
-			}
+			c.memory.Write(c.i, c.regs[x]/100)
+			c.memory.Write(c.i+1, (c.regs[x]/10)%10)
+			c.memory.Write(c.i+2, (c.regs[x]%100)%10)
 		case 0x0055: // Fx55 - LD [I], Vx
 			for i := uint16(0); i <= x; i++ {
 				c.memory.Write(c.i+i, c.regs[i])
